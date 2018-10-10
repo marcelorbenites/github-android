@@ -1,0 +1,39 @@
+buildscript {
+    ext {
+        versionCodeApp = 21
+        versionNameApp = '0.1.0'
+        kotlinVersion = '1.2.71'
+        supportLibraryVersion = '27.1.1'
+        androidPluginVersion = '3.1.1'
+        compileAndroidSDkVersion = 27
+        targetAndroidSDkVersion = 27
+        minimumAndroidSDkVersion = 15
+        androidBuildToolsVersion = '27.0.3'
+        rxJavaAndroidVersion = '2.0.2'
+        rxJavaVersion = '2.1.9'
+        spekVersion = '1.1.5'
+        jUnitPlatformRunnerVersion = '1.0.1'
+        jUnitJupiterApiVersion = '5.0.1'
+        mockitoKotlinVersion = '1.6.0'
+        mockitoCoreVersion = '2.21.0'
+        androidJunit5Version = '1.0.32'
+        gradleVersion = '4.7'
+        mockitoDexMakerVersion = '2.16.0'
+    }
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:$androidPluginVersion"
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = project.gradleVersion
+    distributionUrl = "https://services.gradle.org/distributions/gradle-${project.gradleVersion}-all.zip"
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

@@ -1,0 +1,77 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "de.mannodermaus.gradle.plugins:android-junit5:$androidJunit5Version"
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: "de.mannodermaus.android-junit5"
+
+android {
+    buildToolsVersion androidBuildToolsVersion
+    compileSdkVersion compileAndroidSDkVersion
+
+    defaultConfig {
+        applicationId "com.github.android"
+        minSdkVersion minimumAndroidSDkVersion
+        targetSdkVersion targetAndroidSDkVersion
+        versionCode versionCodeApp
+        versionName versionNameApp
+    }
+
+    buildTypes {
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+
+    testOptions {
+        junitPlatform {
+            filters {
+                engines {
+                    include 'spek'
+                }
+            }
+        }
+    }
+}
+
+repositories {
+    jcenter()
+    google()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    implementation "com.android.support:appcompat-v7:${supportLibraryVersion}"
+    implementation "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
+
+    testImplementation "org.jetbrains.spek:spek-api:${spekVersion}"
+    testImplementation "org.jetbrains.spek:spek-junit-platform-engine:${spekVersion}"
+    testImplementation "org.junit.platform:junit-platform-runner:${jUnitPlatformRunnerVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${jUnitJupiterApiVersion}"
+    testImplementation "com.nhaarman:mockito-kotlin:${mockitoKotlinVersion}"
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+    testImplementation "org.mockito:mockito-core:${mockitoCoreVersion}"
+    testImplementation junit5.unitTests()
+    testImplementation junit5.parameterized()
+}
