@@ -8,7 +8,9 @@ class GitHub(
     private val repositoryGateway: RepositoryGateway,
     private val scheduler: Scheduler,
     private val publishScheduler: Scheduler,
-    private val currentRepositories: MutableList<Repository>
+    private val currentRepositories: MutableList<Repository>,
+    private var currentPage: Int,
+    private var itemsPerPage: Int
 ) {
 
     private var listener: RepositoryListener? = null
@@ -16,7 +18,7 @@ class GitHub(
 
     fun loadTrendingRepositories() {
         disposable = Single.fromCallable {
-            repositoryGateway.getRepositories()
+            repositoryGateway.getRepositories("star", "desc", currentPage, itemsPerPage)
         }.subscribeOn(scheduler)
             .observeOn(publishScheduler).subscribe { repositories -> updateRepositories(repositories) }
     }

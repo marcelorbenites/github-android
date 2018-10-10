@@ -3,6 +3,7 @@ package com.github.android
 import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.schedulers.Schedulers
 import junit.framework.Assert.assertEquals
 import org.jetbrains.spek.api.Spek
@@ -12,16 +13,35 @@ import org.jetbrains.spek.api.dsl.it
 class GitHubTest : Spek({
 
     describe("GitHub") {
-        it("should query trending repositories") {
-            val repositories = listOf(Repository(), Repository())
+        it("should load trending repositories") {
+
+            val repositoryGatewayMock = mock<RepositoryGateway>()
+            val listenerMock = mock<RepositoryListener>()
+
             val gitHub = GitHub(
-                FakeRepositoryGateway(repositories),
+                repositoryGatewayMock,
                 Schedulers.trampoline(),
                 Schedulers.trampoline(),
-                mutableListOf()
+                mutableListOf(),
+                0,
+                2
             )
 
-            val listenerMock = mock<RepositoryListener>()
+            val repositories = listOf(
+                Repository(
+                    "Rails",
+                    "Ruby is a scripting language designed for simplified object-oriented programming.",
+                    "Yukihiro Matsumoto"
+                ),
+                Repository(
+                    "Rails",
+                    "Ruby on Rails (Rails) is a web application framework written in Ruby.",
+                    "David Heinemeier Hansson"
+                )
+            )
+
+            whenever(repositoryGatewayMock.getRepositories("star", "desc", 0, 2))
+                .thenReturn(repositories)
 
             gitHub.registerListener(listenerMock)
             gitHub.loadTrendingRepositories()

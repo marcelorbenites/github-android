@@ -64,7 +64,10 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "com.android.support:appcompat-v7:${supportLibraryVersion}"
     implementation "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
+    implementation "com.squareup.okhttp3:okhttp:${okhttpVersion}"
 
+    testImplementation "org.json:json:${jsonVersion}"
+    testImplementation "com.squareup.okhttp3:mockwebserver:${okhttpVersion}"
     testImplementation "org.jetbrains.spek:spek-api:${spekVersion}"
     testImplementation "org.jetbrains.spek:spek-junit-platform-engine:${spekVersion}"
     testImplementation "org.junit.platform:junit-platform-runner:${jUnitPlatformRunnerVersion}"

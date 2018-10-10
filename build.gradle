@@ -11,6 +11,8 @@ buildscript {
         androidBuildToolsVersion = '27.0.3'
         rxJavaAndroidVersion = '2.0.2'
         rxJavaVersion = '2.1.9'
+        okhttpVersion = '3.10.0'
+        jsonVersion = '20180130'
         spekVersion = '1.1.5'
         jUnitPlatformRunnerVersion = '1.0.1'
         jUnitJupiterApiVersion = '5.0.1'
