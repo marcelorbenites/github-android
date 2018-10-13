@@ -42,7 +42,7 @@ class HttpRepositoryGatewayTest : Spek({
 
             assertEquals("GET", request.method)
             assertEquals(
-                "/search/repositories?sort=quick&order=asc&page=1&per_page=30",
+                "/search/repositories?sort=quick&order=asc&page=1&per_page=30&q=created:%3E1970-01-01",
                 request.path
             )
             assertEquals(

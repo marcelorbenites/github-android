@@ -14,7 +14,7 @@ class HttpRepositoryGateway private constructor(
 
     override fun getRepositories(sort: String, order: String, page: Int, itemsPerPage: Int): List<Repository> {
         val request = Request.Builder()
-            .url("${baseUrl}search/repositories?sort=$sort&order=$order&page=$page&per_page=$itemsPerPage")
+            .url("${baseUrl}search/repositories?sort=$sort&order=$order&page=$page&per_page=$itemsPerPage&q=created:>1970-01-01")
             .build()
         val response = httpClient.newCall(request).execute()
 

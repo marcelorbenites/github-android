@@ -1,7 +1,7 @@
 package com.github.android.gateway.parser
 
-import com.github.android.repository.Repository
 import com.github.android.gateway.JsonParser
+import com.github.android.repository.Repository
 import org.json.JSONObject
 
 class JsonObjectParser : JsonParser {
@@ -21,9 +21,9 @@ class JsonObjectParser : JsonParser {
 
     private fun parseRepository(jsonObject: JSONObject): Repository {
         return Repository(
-            jsonObject.getString("display_name"),
-            jsonObject.getString("short_description"),
-            jsonObject.getString("created_by")
+            jsonObject.getString("name"),
+            jsonObject.getString("description"),
+            jsonObject.getJSONObject("owner").getString("login")
         )
     }
 }
