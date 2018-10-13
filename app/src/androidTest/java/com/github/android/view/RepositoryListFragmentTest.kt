@@ -1,4 +1,4 @@
-package com.github.android
+package com.github.android.view
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
@@ -7,6 +7,10 @@ import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
+import com.github.android.GitHubActivity
+import com.github.android.TestApplication
+import com.github.android.repository.FakeRepositoryManager
+import com.github.android.repository.Repository
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

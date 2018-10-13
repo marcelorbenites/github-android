@@ -2,6 +2,8 @@ package com.github.android
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.github.android.repository.RepositoryManager
+import com.github.android.view.RepositoryListFragment
 
 class GitHubActivity : AppCompatActivity(), GitHubDependencyManager {
 

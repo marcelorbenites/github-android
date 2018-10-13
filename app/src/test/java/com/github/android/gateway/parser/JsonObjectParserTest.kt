@@ -1,6 +1,6 @@
-package com.github.android.gateways.parser
+package com.github.android.gateway.parser
 
-import com.github.android.Repository
+import com.github.android.repository.Repository
 import junit.framework.Assert.assertEquals
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe

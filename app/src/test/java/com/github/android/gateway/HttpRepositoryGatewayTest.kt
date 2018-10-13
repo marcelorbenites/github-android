@@ -1,4 +1,4 @@
-package com.github.android.gateways
+package com.github.android.gateway
 
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock

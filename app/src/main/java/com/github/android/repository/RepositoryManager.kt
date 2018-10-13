@@ -1,4 +1,4 @@
-package com.github.android
+package com.github.android.repository
 
 interface RepositoryManager {
     fun loadTrendingRepositories()

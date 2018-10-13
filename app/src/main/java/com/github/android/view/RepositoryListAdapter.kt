@@ -1,8 +1,10 @@
-package com.github.android
+package com.github.android.view
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.github.android.R
+import com.github.android.repository.Repository
 
 class RepositoryListAdapter(
     private val repositories: MutableList<Repository>,

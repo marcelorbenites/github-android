@@ -1,6 +1,6 @@
-package com.github.android.gateways
+package com.github.android.gateway
 
-import com.github.android.Repository
+import com.github.android.repository.Repository
 
 interface JsonParser {
 

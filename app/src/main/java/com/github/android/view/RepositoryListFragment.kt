@@ -1,4 +1,4 @@
-package com.github.android
+package com.github.android.view
 
 import android.content.Context
 import android.os.Bundle
@@ -8,6 +8,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.github.android.GitHubDependencyManager
+import com.github.android.R
+import com.github.android.repository.RepositoryListener
+import com.github.android.repository.RepositoryManager
+import com.github.android.repository.Repository
 
 class RepositoryListFragment : Fragment() {
 

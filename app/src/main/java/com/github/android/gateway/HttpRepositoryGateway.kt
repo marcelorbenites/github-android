@@ -1,7 +1,7 @@
-package com.github.android.gateways
+package com.github.android.gateway
 
-import com.github.android.Repository
-import com.github.android.RepositoryGateway
+import com.github.android.repository.Repository
+import com.github.android.repository.RepositoryGateway
 import okhttp3.Credentials
 import okhttp3.OkHttpClient
 import okhttp3.Request

@@ -1,7 +1,7 @@
-package com.github.android.gateways.parser
+package com.github.android.gateway.parser
 
-import com.github.android.Repository
-import com.github.android.gateways.JsonParser
+import com.github.android.repository.Repository
+import com.github.android.gateway.JsonParser
 import org.json.JSONObject
 
 class JsonObjectParser : JsonParser {

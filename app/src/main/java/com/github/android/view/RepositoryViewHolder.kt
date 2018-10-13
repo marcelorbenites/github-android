@@ -1,8 +1,10 @@
-package com.github.android
+package com.github.android.view
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
+import com.github.android.R
+import com.github.android.repository.Repository
 
 class RepositoryViewHolder(view: View): RecyclerView.ViewHolder(view) {
 

@@ -1,4 +1,4 @@
-package com.github.android
+package com.github.android.repository
 
 import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.mock
