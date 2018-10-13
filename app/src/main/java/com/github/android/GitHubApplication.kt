@@ -1,10 +1,11 @@
 package com.github.android
 
 import android.app.Application
-import com.github.android.repository.GitHub
-import com.github.android.repository.RepositoryManager
 import com.github.android.gateway.HttpRepositoryGateway
 import com.github.android.gateway.parser.JsonObjectParser
+import com.github.android.repository.GitHub
+import com.github.android.repository.Repositories
+import com.github.android.repository.RepositoryManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -23,9 +24,9 @@ class GitHubApplication: Application(), GitHubDependencyManager {
                 .build(),
             Schedulers.io(),
             AndroidSchedulers.mainThread(),
-            mutableListOf(),
             BuildConfig.GITHUB_TRENDING_REPOSTORIES_START_PAGE,
-            BuildConfig.GITHUB_TRENDING_REPOSTORIES_ITEMS_PER_PAGE
+            BuildConfig.GITHUB_TRENDING_REPOSTORIES_ITEMS_PER_PAGE,
+            Repositories()
         )
         gitHub.loadTrendingRepositories()
     }

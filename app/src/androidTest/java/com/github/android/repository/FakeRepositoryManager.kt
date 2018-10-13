@@ -1,12 +1,12 @@
 package com.github.android.repository
 
-class FakeRepositoryManager(private val repositories: List<Repository>) : RepositoryManager {
+class FakeRepositoryManager(private val repositories: Repositories) : RepositoryManager {
 
     private var listener: RepositoryListener? = null
 
     override fun registerListener(listener: RepositoryListener) {
         this.listener = listener
-        listener.onRepositoryUpdate(repositories)
+        listener.onRepositoriesUpdate(repositories)
     }
 
     override fun clearListener() {
@@ -14,6 +14,6 @@ class FakeRepositoryManager(private val repositories: List<Repository>) : Reposi
     }
 
     override fun loadTrendingRepositories() {
-        listener?.onRepositoryUpdate(repositories)
+        listener?.onRepositoriesUpdate(repositories)
     }
 }

@@ -1,5 +1,6 @@
 package com.github.android.view
 
+import android.support.annotation.StringRes
 import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.assertion.ViewAssertions.matches
@@ -8,8 +9,10 @@ import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.github.android.GitHubActivity
+import com.github.android.R
 import com.github.android.TestApplication
 import com.github.android.repository.FakeRepositoryManager
+import com.github.android.repository.Repositories
 import com.github.android.repository.Repository
 import org.junit.Before
 import org.junit.Rule
@@ -31,11 +34,11 @@ class RepositoryListFragmentTest {
     }
 
     @Test
-    fun shouldDisplayLoadingTrendingRepositories() {
+    fun shouldDisplayLoadedTrendingRepositories() {
         testApplication.repositoryManager = FakeRepositoryManager(
-            listOf(
+            Repositories(listOf(
                 Repository("Imagine Language", "Programming language.", "John Lennon")
-            )
+            ), Repositories.Status.LOADED)
         )
 
         testApplication.repositoryManager!!.loadTrendingRepositories()
@@ -46,4 +49,33 @@ class RepositoryListFragmentTest {
         onView(withText("Programming language.")).check(matches(isDisplayed()))
         onView(withText("John Lennon")).check(matches(isDisplayed()))
     }
+
+    @Test
+    fun shouldDisplayLoadingWhileTrendingRepositoriesAreNotLoaded() {
+        testApplication.repositoryManager = FakeRepositoryManager(
+            Repositories(emptyList(), Repositories.Status.LOADING)
+        )
+
+        testApplication.repositoryManager!!.loadTrendingRepositories()
+
+        rule.launchActivity(null)
+
+        onView(withText(getString(R.string.fragment_repository_loading_text))).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun shouldDisplayErrorWhenTrendingRepositoriesFailToLoad() {
+        testApplication.repositoryManager = FakeRepositoryManager(
+            Repositories(emptyList(), Repositories.Status.ERROR)
+        )
+
+        testApplication.repositoryManager!!.loadTrendingRepositories()
+
+        rule.launchActivity(null)
+
+        onView(withText(getString(R.string.fragment_repository_error_text))).check(matches(isDisplayed()))
+    }
+
+    private fun getString(@StringRes stringResource: Int) =
+        InstrumentationRegistry.getTargetContext().getString(stringResource)
 }
