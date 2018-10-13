@@ -6,6 +6,7 @@ import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.schedulers.TestScheduler
 import junit.framework.Assert.assertEquals
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
@@ -117,6 +118,31 @@ class GitHubTest : Spek({
 
             verify(listenerMock).onRepositoriesUpdate(captor.capture())
             assertEquals(captor.lastValue, Repositories(emptyList(), Repositories.Status.ERROR))
+        }
+
+        it("should not load if repositories are already loading") {
+            val repositoryGatewayMock = mock<RepositoryGateway>()
+            val testScheduler = TestScheduler()
+
+            val gitHub = GitHub(
+                repositoryGatewayMock,
+                testScheduler,
+                Schedulers.trampoline(),
+                0,
+                2,
+                Repositories()
+            )
+
+            whenever(repositoryGatewayMock.getRepositories("star", "desc", 0, 2))
+                .thenReturn(emptyList())
+
+            gitHub.loadTrendingRepositories()
+            gitHub.loadTrendingRepositories()
+            gitHub.loadTrendingRepositories()
+
+            testScheduler.triggerActions()
+
+            verify(repositoryGatewayMock, times(1)).getRepositories("star", "desc", 0, 2)
         }
     }
 })

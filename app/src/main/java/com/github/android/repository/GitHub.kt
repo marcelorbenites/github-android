@@ -17,17 +17,20 @@ class GitHub(
     private var disposable: Disposable? = null
 
     override fun loadTrendingRepositories() {
-        updateRepositories(Repositories(emptyList(), Repositories.Status.LOADING))
-        disposable = Single.fromCallable {
-            repositoryGateway.getRepositories("star", "desc", currentPage, itemsPerPage)
+        if (currentRepositories.status != Repositories.Status.LOADING) {
+            updateRepositories(Repositories(emptyList(), Repositories.Status.LOADING))
+
+            disposable = Single.fromCallable {
+                repositoryGateway.getRepositories("star", "desc", currentPage, itemsPerPage)
+            }
+                .subscribeOn(scheduler)
+                .observeOn(publishScheduler).subscribe(
+                    { repositories ->
+                        updateRepositories(Repositories(repositories, Repositories.Status.LOADED))
+                    },
+                    { updateRepositories(Repositories(emptyList(), Repositories.Status.ERROR)) }
+                )
         }
-            .subscribeOn(scheduler)
-            .observeOn(publishScheduler).subscribe(
-                { repositories ->
-                    updateRepositories(Repositories(repositories, Repositories.Status.LOADED))
-                },
-                { updateRepositories(Repositories(emptyList(), Repositories.Status.ERROR)) }
-            )
     }
 
     override fun registerListener(listener: RepositoryListener) {
