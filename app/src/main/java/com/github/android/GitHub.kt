@@ -11,25 +11,29 @@ class GitHub(
     private val currentRepositories: MutableList<Repository>,
     private var currentPage: Int,
     private var itemsPerPage: Int
-) {
+) : RepositoryManager {
 
     private var listener: RepositoryListener? = null
     private var disposable: Disposable? = null
 
-    fun loadTrendingRepositories() {
+    override fun loadTrendingRepositories() {
         disposable = Single.fromCallable {
             repositoryGateway.getRepositories("star", "desc", currentPage, itemsPerPage)
         }.subscribeOn(scheduler)
             .observeOn(publishScheduler).subscribe { repositories -> updateRepositories(repositories) }
     }
 
+    override fun registerListener(listener: RepositoryListener) {
+        this.listener = listener
+    }
+
+    override fun clearListener() {
+        this.listener = null
+    }
+
     private fun updateRepositories(repositories: List<Repository>) {
         currentRepositories.clear()
         currentRepositories.addAll(repositories)
         listener?.onRepositoryUpdate(currentRepositories)
-    }
-
-    fun registerListener(listener: RepositoryListener) {
-        this.listener = listener
     }
 }

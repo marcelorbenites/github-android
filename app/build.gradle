@@ -24,6 +24,12 @@ android {
         targetSdkVersion targetAndroidSDkVersion
         versionCode versionCodeApp
         versionName versionNameApp
+        testInstrumentationRunner "com.github.android.TestRunner"
+        buildConfigField "String", "GITHUB_API_BASE_URL", "\"${project.GITHUB_API_BASE_URL}\""
+        buildConfigField "String", "GITHUB_USERNAME", "\"${project.GITHUB_USERNAME}\""
+        buildConfigField "String", "GITHUB_PASSWORD", "\"${project.GITHUB_PASSWORD}\""
+        buildConfigField "int", "GITHUB_TRENDING_REPOSTORIES_START_PAGE", project.GITHUB_TRENDING_REPOSTORIES_START_PAGE
+        buildConfigField "int", "GITHUB_TRENDING_REPOSTORIES_ITEMS_PER_PAGE", project.GITHUB_TRENDING_REPOSTORIES_ITEMS_PER_PAGE
     }
 
     buildTypes {
@@ -32,11 +38,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-        test.java.srcDirs += 'src/test/kotlin'
     }
 
     compileOptions {
@@ -62,8 +63,9 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    implementation "com.android.support:appcompat-v7:${supportLibraryVersion}"
+    implementation "com.android.support:design:${supportLibraryVersion}"
     implementation "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
+    implementation "io.reactivex.rxjava2:rxandroid:${rxJavaAndroidVersion}"
     implementation "com.squareup.okhttp3:okhttp:${okhttpVersion}"
 
     testImplementation "org.json:json:${jsonVersion}"
@@ -77,4 +79,8 @@ dependencies {
     testImplementation "org.mockito:mockito-core:${mockitoCoreVersion}"
     testImplementation junit5.unitTests()
     testImplementation junit5.parameterized()
+
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:${espressoVersion}"
+    androidTestImplementation "com.android.support.test:runner:${supportTestRunnerVersion}"
+    androidTestImplementation "com.android.support:design:${supportLibraryVersion}"
 }
