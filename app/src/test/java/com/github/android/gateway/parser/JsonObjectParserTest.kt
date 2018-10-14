@@ -14,16 +14,19 @@ class JsonObjectParserTest : Spek({
 
             val repositories = listOf(
                 Repository(
+                    "1",
                     "Ruby",
                     "Ruby is a scripting language designed for simplified object-oriented programming.",
                     "Yukihiro Matsumoto"
                 ),
                 Repository(
+                    "2",
                     "Rails",
                     "Ruby on Rails (Rails) is a web application framework written in Ruby.",
                     "David Heinemeier Hansson"
                 ),
                 Repository(
+                    "3",
                     "Homebrew",
                     "Homebrew is a package manager for macOS.",
                     "Max Howell"

@@ -21,6 +21,7 @@ class JsonObjectParser : JsonParser {
 
     private fun parseRepository(jsonObject: JSONObject): Repository {
         return Repository(
+            jsonObject.getInt("id").toString(),
             jsonObject.getString("name"),
             jsonObject.getString("description"),
             jsonObject.getJSONObject("owner").getString("login")

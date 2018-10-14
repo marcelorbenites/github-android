@@ -33,6 +33,16 @@ class GitHub(
         }
     }
 
+    override fun selectRepository(repositoryId: String) {
+        val repository = currentRepositories.list.firstOrNull { repository ->  repository.id == repositoryId}
+
+        if (repository != null) {
+            updateRepositories(currentRepositories.copy(selectedRepository = repository))
+        } else {
+            updateRepositories(currentRepositories)
+        }
+    }
+
     override fun registerListener(listener: RepositoryListener) {
         this.listener = listener
         this.listener?.onRepositoriesUpdate(currentRepositories)

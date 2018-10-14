@@ -32,11 +32,13 @@ class GitHubTest : Spek({
 
             val repositories = listOf(
                 Repository(
-                    "Rails",
+                    "1",
+                    "Ruby",
                     "Ruby is a scripting language designed for simplified object-oriented programming.",
                     "Yukihiro Matsumoto"
                 ),
                 Repository(
+                    "2",
                     "Rails",
                     "Ruby on Rails (Rails) is a web application framework written in Ruby.",
                     "David Heinemeier Hansson"
@@ -72,11 +74,13 @@ class GitHubTest : Spek({
 
             val repositories = listOf(
                 Repository(
-                    "Rails",
+                    "1",
+                    "Ruby",
                     "Ruby is a scripting language designed for simplified object-oriented programming.",
                     "Yukihiro Matsumoto"
                 ),
                 Repository(
+                    "2",
                     "Rails",
                     "Ruby on Rails (Rails) is a web application framework written in Ruby.",
                     "David Heinemeier Hansson"
@@ -95,7 +99,7 @@ class GitHubTest : Spek({
             assertEquals(captor.lastValue, Repositories(repositories, Repositories.Status.LOADED))
         }
 
-        it("should emit repositories with error status when repository gateway fails") {
+        it("should emit repositories with error status when selectedRepository gateway fails") {
             val repositoryGatewayMock = mock<RepositoryGateway>()
             val listenerMock = mock<RepositoryListener>()
 
@@ -143,6 +147,70 @@ class GitHubTest : Spek({
             testScheduler.triggerActions()
 
             verify(repositoryGatewayMock, times(1)).getRepositories("star", "desc", 0, 2)
+        }
+
+        it("should select a selectedRepository") {
+
+            val listenerMock = mock<RepositoryListener>()
+
+            val repositoryList = listOf(
+                Repository(
+                    "1",
+                    "Rails",
+                    "Ruby is a scripting language designed for simplified object-oriented programming.",
+                    "Yukihiro Matsumoto"
+                ),
+                Repository(
+                    "2",
+                    "Rails",
+                    "Ruby on Rails (Rails) is a web application framework written in Ruby.",
+                    "David Heinemeier Hansson"
+                )
+            )
+            val gitHub = GitHub(
+                mock(),
+                Schedulers.trampoline(),
+                Schedulers.trampoline(),
+                0,
+                2,
+                Repositories(repositoryList, Repositories.Status.LOADED)
+            )
+
+            gitHub.registerListener(listenerMock)
+            gitHub.selectRepository("2")
+
+            val captor = argumentCaptor<Repositories>()
+
+            verify(listenerMock, times(2)).onRepositoriesUpdate(captor.capture())
+            assertEquals(captor.lastValue, Repositories(repositoryList, Repositories.Status.LOADED, Repository(
+                "2",
+                "Rails",
+                "Ruby on Rails (Rails) is a web application framework written in Ruby.",
+                "David Heinemeier Hansson"
+            )))
+        }
+
+        it("should emit current state when attempt to select selectedRepository and repositories are not loaded") {
+
+            val listenerMock = mock<RepositoryListener>()
+
+            val gitHub = GitHub(
+                mock(),
+                Schedulers.trampoline(),
+                Schedulers.trampoline(),
+                0,
+                2,
+                Repositories(emptyList(), Repositories.Status.LOADING)
+            )
+
+            gitHub.registerListener(listenerMock)
+            gitHub.selectRepository("2")
+
+            val captor = argumentCaptor<Repositories>()
+
+            verify(listenerMock, times(2)).onRepositoriesUpdate(captor.capture())
+            assertEquals(captor.firstValue, Repositories(emptyList(), Repositories.Status.LOADING))
+            assertEquals(captor.lastValue, Repositories(emptyList(), Repositories.Status.LOADING))
         }
     }
 })

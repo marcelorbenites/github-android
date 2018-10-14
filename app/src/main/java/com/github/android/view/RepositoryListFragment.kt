@@ -9,17 +9,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.github.android.GitHubDependencyManager
+import com.github.android.GitHubViewDependencyManager
 import com.github.android.R
 import com.github.android.repository.Repositories
+import com.github.android.repository.Repository
 import com.github.android.repository.RepositoryListener
 import com.github.android.repository.RepositoryManager
 
 class RepositoryListFragment : Fragment() {
 
-    private lateinit var repositoryManager: RepositoryManager
+    private var repositoryManager: RepositoryManager? = null
+    private var navigator: Navigator? = null
 
-    private var container: GitHubDependencyManager? = null
+    private var dependencyManager: GitHubViewDependencyManager? = null
     private var list: RecyclerView? = null
     private var adapter: RepositoryListAdapter? = null
     private var loadingText: TextView? = null
@@ -27,10 +29,10 @@ class RepositoryListFragment : Fragment() {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        if (context is GitHubDependencyManager) {
-            this.container = context
+        if (context is GitHubViewDependencyManager) {
+            this.dependencyManager = context
         } else {
-            throw IllegalStateException("Context must implement ${GitHubDependencyManager::class.java.simpleName}")
+            throw IllegalStateException("Context must implement ${GitHubViewDependencyManager::class.java.simpleName}")
         }
     }
 
@@ -40,14 +42,15 @@ class RepositoryListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        repositoryManager = container!!.getRepositoryManager()
+        repositoryManager = dependencyManager!!.getRepositoryManager()
+        navigator = dependencyManager!!.getNavigator()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         list = view.findViewById(R.id.fragment_repository_list)
-        loadingText = view.findViewById(R.id.fragment_repository_loading_text)
-        errorText = view.findViewById(R.id.fragment_repository_error_text)
+        loadingText = view.findViewById(R.id.fragment_repository_list_loading_text)
+        errorText = view.findViewById(R.id.fragment_repository_list_error_text)
         adapter = RepositoryListAdapter(mutableListOf(), LayoutInflater.from(context))
         list!!.adapter = adapter
         list!!.layoutManager = LinearLayoutManager(context)
@@ -55,7 +58,14 @@ class RepositoryListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        repositoryManager.registerListener(object : RepositoryListener {
+
+        adapter!!.registerListener(object : RepositorySelectionListener {
+            override fun onRepositorySelected(repository: Repository) {
+                repositoryManager!!.selectRepository(repository.id)
+            }
+        })
+
+        repositoryManager!!.registerListener(object : RepositoryListener {
             override fun onRepositoriesUpdate(repositories: Repositories) {
 
                 when (repositories.status) {
@@ -66,6 +76,12 @@ class RepositoryListFragment : Fragment() {
                         errorText!!.visibility = View.GONE
                     }
                     Repositories.Status.LOADED -> {
+
+                        if (repositories.selectedRepository != null) {
+                            navigator!!.navigateToRepositoryDetailView()
+                            return
+                        }
+
                         adapter!!.updateRepositories(repositories.list)
                         list!!.visibility = View.VISIBLE
                         loadingText!!.visibility = View.GONE
@@ -82,7 +98,8 @@ class RepositoryListFragment : Fragment() {
     }
 
     override fun onPause() {
-        repositoryManager.clearListener()
+        repositoryManager!!.clearListener()
+        adapter!!.clearListener()
         super.onPause()
     }
 
@@ -94,8 +111,14 @@ class RepositoryListFragment : Fragment() {
         super.onDestroyView()
     }
 
+    override fun onDestroy() {
+        repositoryManager = null
+        navigator = null
+        super.onDestroy()
+    }
+
     override fun onDetach() {
-        container = null
+        dependencyManager = null
         super.onDetach()
     }
 }

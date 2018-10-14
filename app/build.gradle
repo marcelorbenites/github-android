@@ -81,6 +81,7 @@ dependencies {
     testImplementation junit5.parameterized()
 
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${espressoVersion}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-contrib:${espressoVersion}"
     androidTestImplementation "com.android.support.test:runner:${supportTestRunnerVersion}"
     androidTestImplementation "com.android.support:design:${supportLibraryVersion}"
 }

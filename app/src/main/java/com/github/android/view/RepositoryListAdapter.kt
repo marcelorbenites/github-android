@@ -11,8 +11,18 @@ class RepositoryListAdapter(
     private val inflater: LayoutInflater
 ) : RecyclerView.Adapter<RepositoryViewHolder>() {
 
+    private var delegateListener: RepositorySelectionListener? = null
+
+    private val listener: RepositorySelectionListener by lazy {
+        object : RepositorySelectionListener {
+            override fun onRepositorySelected(repository: Repository) {
+                delegateListener?.onRepositorySelected(repository)
+            }
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoryViewHolder {
-        return RepositoryViewHolder(inflater.inflate(R.layout.item_github_repository, parent, false))
+        return RepositoryViewHolder(inflater.inflate(R.layout.item_github_repository, parent, false), listener)
     }
 
     override fun getItemCount(): Int {
@@ -27,5 +37,13 @@ class RepositoryListAdapter(
         this.repositories.clear()
         this.repositories.addAll(repositories)
         notifyDataSetChanged()
+    }
+
+    fun registerListener(listener: RepositorySelectionListener) {
+        this.delegateListener = listener
+    }
+
+    fun clearListener() {
+        this.delegateListener = null
     }
 }
