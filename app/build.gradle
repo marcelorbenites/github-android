@@ -6,13 +6,11 @@ buildscript {
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath "de.mannodermaus.gradle.plugins:android-junit5:$androidJunit5Version"
     }
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: "de.mannodermaus.android-junit5"
 
 android {
     buildToolsVersion androidBuildToolsVersion
@@ -24,7 +22,6 @@ android {
         targetSdkVersion targetAndroidSDkVersion
         versionCode versionCodeApp
         versionName versionNameApp
-        testInstrumentationRunner "com.github.android.TestRunner"
         buildConfigField "String", "GITHUB_API_BASE_URL", "\"${project.GITHUB_API_BASE_URL}\""
         buildConfigField "String", "GITHUB_USERNAME", "\"${project.GITHUB_USERNAME}\""
         buildConfigField "String", "GITHUB_PASSWORD", "\"${project.GITHUB_PASSWORD}\""
@@ -44,16 +41,6 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
-
-    testOptions {
-        junitPlatform {
-            filters {
-                engines {
-                    include 'spek'
-                }
-            }
-        }
-    }
 }
 
 repositories {
@@ -62,26 +49,6 @@ repositories {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    implementation "com.android.support:design:${supportLibraryVersion}"
-    implementation "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
+    implementation project(':presentation')
     implementation "io.reactivex.rxjava2:rxandroid:${rxJavaAndroidVersion}"
-    implementation "com.squareup.okhttp3:okhttp:${okhttpVersion}"
-
-    testImplementation "org.json:json:${jsonVersion}"
-    testImplementation "com.squareup.okhttp3:mockwebserver:${okhttpVersion}"
-    testImplementation "org.jetbrains.spek:spek-api:${spekVersion}"
-    testImplementation "org.jetbrains.spek:spek-junit-platform-engine:${spekVersion}"
-    testImplementation "org.junit.platform:junit-platform-runner:${jUnitPlatformRunnerVersion}"
-    testImplementation "org.junit.jupiter:junit-jupiter-api:${jUnitJupiterApiVersion}"
-    testImplementation "com.nhaarman:mockito-kotlin:${mockitoKotlinVersion}"
-    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
-    testImplementation "org.mockito:mockito-core:${mockitoCoreVersion}"
-    testImplementation junit5.unitTests()
-    testImplementation junit5.parameterized()
-
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:${espressoVersion}"
-    androidTestImplementation "com.android.support.test.espresso:espresso-contrib:${espressoVersion}"
-    androidTestImplementation "com.android.support.test:runner:${supportTestRunnerVersion}"
-    androidTestImplementation "com.android.support:design:${supportLibraryVersion}"
 }

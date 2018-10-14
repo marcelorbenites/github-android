@@ -1,11 +1,11 @@
 package com.github.android
 
 import android.app.Application
-import com.github.android.gateway.HttpRepositoryGateway
-import com.github.android.gateway.parser.JsonObjectParser
-import com.github.android.repository.GitHub
-import com.github.android.repository.Repositories
-import com.github.android.repository.RepositoryManager
+import com.github.domain.gateway.HttpRepositoryGateway
+import com.github.domain.gateway.parser.JsonObjectParser
+import com.github.domain.repository.GitHub
+import com.github.domain.repository.Repositories
+import com.github.domain.repository.RepositoryManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 

@@ -1,7 +1,10 @@
-package com.github.android
+package com.github.presentation
 
 import com.github.domain.repository.RepositoryManager
 
-interface GitHubDependencyManager {
+interface GitHubViewContainer {
+
     fun getRepositoryManager(): RepositoryManager
+
+    fun getNavigator(): Navigator
 }

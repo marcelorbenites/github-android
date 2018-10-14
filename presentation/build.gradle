@@ -1,0 +1,59 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    buildToolsVersion androidBuildToolsVersion
+    compileSdkVersion compileAndroidSDkVersion
+
+    defaultConfig {
+        minSdkVersion minimumAndroidSDkVersion
+        targetSdkVersion targetAndroidSDkVersion
+        versionCode versionCodeApp
+        versionName versionNameApp
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+
+    buildTypes {
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+}
+
+repositories {
+    jcenter()
+    google()
+}
+
+dependencies {
+    api project(":domain")
+    api "com.android.support:design:${supportLibraryVersion}"
+
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:${espressoVersion}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-contrib:${espressoVersion}"
+    androidTestImplementation "com.android.support.test:runner:${supportTestRunnerVersion}"
+    androidTestImplementation "com.android.support:design:${supportLibraryVersion}"
+    androidTestImplementation "com.nhaarman:mockito-kotlin:${mockitoKotlinVersion}"
+    androidTestImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+    androidTestImplementation "org.mockito:mockito-core:${mockitoCoreVersion}"
+    androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:${mockitoDexMakerVersion}"
+}
