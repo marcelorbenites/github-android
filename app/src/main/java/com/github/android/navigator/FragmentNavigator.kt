@@ -3,8 +3,8 @@ package com.github.android.navigator
 import android.support.v4.app.FragmentManager
 import com.github.android.R
 import com.github.android.view.Navigator
-import com.github.android.view.RepositoryDetailFragment
-import com.github.android.view.RepositoryListFragment
+import com.github.android.view.detail.RepositoryDetailFragment
+import com.github.android.view.list.RepositoryListFragment
 
 class FragmentNavigator(private val fragmentManager: FragmentManager) : Navigator {
 

@@ -1,4 +1,4 @@
-package com.github.android.view
+package com.github.android.view.list
 
 import android.content.Context
 import android.os.Bundle
@@ -9,12 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.github.android.GitHubViewDependencyManager
 import com.github.android.R
 import com.github.android.repository.Repositories
 import com.github.android.repository.Repository
 import com.github.android.repository.RepositoryListener
 import com.github.android.repository.RepositoryManager
+import com.github.android.view.GitHubViewDependencyManager
+import com.github.android.view.Navigator
 
 class RepositoryListFragment : Fragment() {
 

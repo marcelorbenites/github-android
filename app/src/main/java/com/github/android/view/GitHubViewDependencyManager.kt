@@ -1,6 +1,6 @@
-package com.github.android
+package com.github.android.view
 
-import com.github.android.view.Navigator
+import com.github.android.GitHubDependencyManager
 
 interface GitHubViewDependencyManager: GitHubDependencyManager {
 

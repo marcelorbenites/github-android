@@ -1,4 +1,4 @@
-package com.github.android.view
+package com.github.android.view.list
 
 import android.support.annotation.StringRes
 import android.support.test.InstrumentationRegistry
@@ -12,12 +12,12 @@ import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import com.github.android.GitHubActivity
 import com.github.android.R
 import com.github.android.TestApplication
 import com.github.android.repository.FakeRepositoryManager
 import com.github.android.repository.Repositories
 import com.github.android.repository.Repository
+import com.github.android.view.GitHubActivity
 import com.github.android.view.ViewMatchersExtension.Companion.withHolderView
 import org.junit.Before
 import org.junit.Rule

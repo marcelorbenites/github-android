@@ -1,4 +1,4 @@
-package com.github.android.view
+package com.github.android.view.list
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

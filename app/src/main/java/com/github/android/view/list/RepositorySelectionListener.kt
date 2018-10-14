@@ -1,4 +1,4 @@
-package com.github.android.view
+package com.github.android.view.list
 
 import com.github.android.repository.Repository
 

@@ -1,10 +1,11 @@
-package com.github.android
+package com.github.android.view
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.github.android.GitHubDependencyManager
+import com.github.android.R
 import com.github.android.navigator.FragmentNavigator
 import com.github.android.repository.RepositoryManager
-import com.github.android.view.Navigator
 
 class GitHubActivity : AppCompatActivity(), GitHubViewDependencyManager {
 

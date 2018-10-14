@@ -3,6 +3,6 @@
         xmlns:android="http://schemas.android.com/apk/res/android" package="com.github.android">
 
     <application android:name=".TestApplication" android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-        <activity android:name=".GitHubActivity"/>
+        <activity android:name=".view.GitHubActivity"/>
     </application>
 </manifest>
