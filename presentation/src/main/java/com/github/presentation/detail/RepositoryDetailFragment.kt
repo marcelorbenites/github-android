@@ -3,6 +3,7 @@ package com.github.presentation.detail
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +22,7 @@ class RepositoryDetailFragment : Fragment() {
     private var container: GitHubViewContainer? = null
     private var navigator: Navigator? = null
 
-    private var name: TextView? = null
+    private var toolbar: Toolbar? = null
     private var description: TextView? = null
     private var author: TextView? = null
 
@@ -44,7 +45,8 @@ class RepositoryDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        name = view.findViewById(R.id.fragment_repository_detail_name)
+        toolbar = view.findViewById(R.id.fragment_repository_detail_title)
+        container!!.setToolbar(toolbar!!)
         description = view.findViewById(R.id.fragment_repository_detail_description)
         author = view.findViewById(R.id.fragment_repository_detail_author)
     }
@@ -61,7 +63,7 @@ class RepositoryDetailFragment : Fragment() {
         repositoryManager!!.registerListener(object : RepositoryListener {
             override fun onRepositoriesUpdate(repositories: Repositories) {
                 if (repositories.selectedRepository != null) {
-                    name!!.text = repositories.selectedRepository!!.name
+                    toolbar!!.title = repositories.selectedRepository!!.name
                     description!!.text = repositories.selectedRepository!!.description
                     author!!.text = repositories.selectedRepository!!.author
                 } else {
@@ -78,7 +80,7 @@ class RepositoryDetailFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        name = null
+        toolbar = null
         description = null
         author = null
         super.onDestroyView()

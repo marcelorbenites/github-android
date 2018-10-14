@@ -2,6 +2,7 @@ package com.github.android
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import com.github.domain.repository.RepositoryManager
 import com.github.presentation.BackNavigationListener
 import com.github.presentation.GitHubViewContainer
@@ -39,6 +40,10 @@ class GitHubActivity : AppCompatActivity(), GitHubViewContainer, Navigator {
 
     override fun getNavigator(): Navigator {
         return this
+    }
+
+    override fun setToolbar(toolbar: Toolbar) {
+        setSupportActionBar(toolbar)
     }
 
     override fun navigateToRepositoryDetailView() {

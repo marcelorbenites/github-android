@@ -3,6 +3,7 @@ package com.github.presentation.list
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -50,6 +51,7 @@ class RepositoryListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         list = view.findViewById(R.id.fragment_repository_list)
+        list!!.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         loadingText = view.findViewById(R.id.fragment_repository_list_loading_text)
         errorText = view.findViewById(R.id.fragment_repository_list_error_text)
         adapter = RepositoryListAdapter(mutableListOf(), LayoutInflater.from(context))

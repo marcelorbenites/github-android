@@ -13,7 +13,6 @@ import com.github.domain.repository.Repositories
 import com.github.domain.repository.Repository
 import com.github.presentation.FakeNavigator
 import com.github.presentation.FakeRepositoryManager
-import com.github.presentation.R
 import com.github.presentation.TestActivity
 import com.github.presentation.TestApplication
 import com.nhaarman.mockito_kotlin.mock
@@ -59,7 +58,6 @@ class RepositoryDetailFragmentTest {
         (rule.activity as TestActivity).testNavigator = mock()
         (rule.activity as TestActivity).showFragment(RepositoryDetailFragment())
 
-        onView(withText(getString(R.string.fragment_repository_detail_title))).check(matches(isDisplayed()))
         onView(withText("Imagine Language")).check(matches(isDisplayed()))
         onView(withText("Programming language.")).check(matches(isDisplayed()))
         onView(withText("John Lennon")).check(matches(isDisplayed()))
